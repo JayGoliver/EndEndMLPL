@@ -29,13 +29,13 @@ jobs:
     # Step 4: Build and Push Docker Image
     - name: Build and Push Docker Image
       run: |
-        docker build --no-cache -t airbnbtest.azurecr.io/myapp:2.0 .
-        docker push airbnbtest.azurecr.io/myapp:2.0
+        docker build --no-cache -t airbnbtest.azurecr.io/myapp:1.0 .
+        docker push airbnbtest.azurecr.io/myapp:1.0
 
-    # Step 5: Configure Continuous Deployment
-    - name: Configure Continuous Deployment
+    # Step 5: Restart Azure Web App
+    - name: Restart Azure Web App
       run: |
-        az webapp config appsettings set --name airbnbtest --resource-group containertest --settings DOCKER_ENABLE_CI=true
+        az webapp restart --name airbnbtest --resource-group containertest
 
     # Step 6: Deploy to Azure Web App using Publish Profile
     - name: Deploy to Azure Web App
@@ -44,4 +44,4 @@ jobs:
         app-name: airbnbtest
         slot-name: production
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: 'airbnbtest.azurecr.io/myapp:2.0'
+        images: 'airbnbtest.azurecr.io/myapp:1.0'
