@@ -23,7 +23,7 @@ jobs:
     # Step 3: Build and Push Docker Image
     - name: Build and Push Docker Image
       run: |
-        docker build -t airbnbtest.azurecr.io/myapp:latest .
+        docker build --no-cache -t airbnbtest.azurecr.io/myapp:latest .
         docker push airbnbtest.azurecr.io/myapp:latest
 
     # Step 4: Deploy to Azure Web App using Publish Profile
